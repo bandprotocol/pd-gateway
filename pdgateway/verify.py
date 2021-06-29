@@ -36,14 +36,14 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
         "reporter": reporter,
         "signature": signature
     }
-    print("verify request with {}".format(json.dumps(params)))
+    current_app.logger.debug("verify request with {}".format(json.dumps(params)))
     try:
         res = requests.get(url=vfrq_url, params=params)
         if res.status_code == 200:
             return True, res.json()
         else:
-            print("request verification is NOT valid: {}".format(res.text))
+            current_app.logger.warn("request verification is NOT valid: {}".format(res.text))
             return False, res.json()
     except exceptions.RequestException as e:
-        print("execption occurred when verify request: {}".format(str(e)))
+        current_app.logger.error("execption occurred when verify request: {}".format(str(e)))
         return False, { "error": str(e) }

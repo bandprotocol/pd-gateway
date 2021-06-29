@@ -19,8 +19,8 @@ class CoinGeckoUserQuery():
 
         # Note that sensitive information e.g. API keys can be accessed from
         # Flask's configuration
-        print('Config can be accessed here')
-        print('API_KEY:', current_app.config['API_KEY'])
+        current_app.logger.debug('Config can be accessed here')
+        current_app.logger.debug('API_KEY:', current_app.config['API_KEY'])
 
         resp = requests.get('https://api.coingecko.com/api/v3/simple/price', params=params)
         # We can return response without any modification
