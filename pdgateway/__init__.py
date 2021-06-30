@@ -1,11 +1,10 @@
 import os
 
-from typing import Any, Mapping, cast
-from flask import Flask, request, jsonify
+from typing import Any, Callable, Mapping
+from flask import Flask, Response, Request, request, jsonify
 from .verify import verify_request
-from .query import UserQuery
 
-def create_app(userQuery: UserQuery, config: Mapping[str, Any]) -> Flask:
+def create_app(userQuery: Callable[[Request], Response], config: Mapping[str, Any]) -> Flask:
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config['USER_QUERY'] = userQuery
@@ -26,7 +25,7 @@ def create_app(userQuery: UserQuery, config: Mapping[str, Any]) -> Flask:
         if not is_valid:
             return jsonify({"error": response}), 400
         
-        userDefinedQuery = cast(UserQuery, app.config['USER_QUERY'])
-        return userDefinedQuery.query(request)
+        userDefinedQuery = app.config['USER_QUERY']
+        return userDefinedQuery(request)
 
     return app
