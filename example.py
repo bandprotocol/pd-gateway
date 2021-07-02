@@ -1,13 +1,22 @@
 from os import environ
 import requests
 
-from flask import Request, Response, current_app
+from flask import request, current_app
 
 from pdgateway import create_app
 
+# Here, we can create a new Flask app with any preferred configuration.
+# We can collect data from environment variable
+# Or, modify `app` instance to fit your needs.
+app = create_app(config={
+    'API_KEY': environ.get('COINGECKO_API_KEY'),
+    'BANDCHAIN_REST_ENDPOINT': 'http://localhost:1317',
+})
+
 # This is an example of implementation on UserQuery
 # This class will query data from the exclusive API
-def query(request: Request) -> Response:
+@app.route('/', methods=['GET'])
+def query():
     # Get coin IDs given by data source script
     ids = request.args.getlist('ids')
     params = {
@@ -24,14 +33,6 @@ def query(request: Request) -> Response:
     # We can return response without any modification
     # and let the data source script modify it before return result to oracle script
     return resp.json(), resp.status_code
-
-# Here, we can create a new Flask app with any preferred configuration.
-# We can collect data from environment variable
-# Or, modify `app` instance to fit your needs.
-app = create_app(userQuery=query, config={
-    'API_KEY': environ.get('COINGECKO_API_KEY'),
-    'BANDCHAIN_REST_ENDPOINT': 'http://localhost:1317',
-})
 
 def main():
     # Then, run the app
