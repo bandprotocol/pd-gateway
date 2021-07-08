@@ -14,7 +14,9 @@ REQUIRED_HEADERS = [
 ]
 
 def check_required_headers(headers: Headers) -> bool:
-    if not all(header_name in headers for header_name in REQUIRED_HEADERS):
+    if all(header_name in headers for header_name in REQUIRED_HEADERS):
+        return True
+    else:
         return False
 
 # verify_request verifies incoming requests by sending the info
@@ -43,7 +45,7 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
         if res.status_code == 200:
             return True, res.json()
         else:
-            current_app.logger.warn("request verification is NOT valid: {}".format(res.text))
+            current_app.logger.warning("request verification is NOT valid: {}".format(res.text))
             return False, res.json()
     except exceptions.RequestException as e:
         current_app.logger.error("execption occurred when verify request: {}".format(str(e)))

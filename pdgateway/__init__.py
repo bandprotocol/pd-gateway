@@ -1,9 +1,9 @@
 import os
 
 from typing import Any, Mapping
-from flask import Flask, Request, Response, request, jsonify
+from flask import Flask, Response, request, jsonify
 from .verify import check_required_headers, verify_request
-from cache import LRUCache, cache_signature, is_cache_hit
+from .cache import LRUCache
 
 def create_app(config: Mapping[str, Any]) -> Flask:
     # create and configure the app
