@@ -33,6 +33,8 @@ def create_app(config: Mapping[str, Any]) -> Flask:
         if not is_valid:
             return jsonify({"error": response}), 400
 
+    # a hook function to temporarily remember request to prevent from
+    # duplicated requests.
     @app.after_request
     def update_cache(response: Response) -> Response:
         if response.status_code == 200:
