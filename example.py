@@ -24,19 +24,20 @@ def query():
         'vs_currencies': 'usd',
     }
 
-    # This is an example on accessing app configuration,
+    # This is an example of accessing app configuration,
     # which accesses value of API_KEY.
     apiKey = current_app.config['API_KEY']
     current_app.logger.debug('API_KEY:', apiKey)
 
-    # Send a HTTP request to CoinGecko to get coin prices
+    # Send an HTTP request to CoinGecko to get coin prices
     resp = requests.get('https://api.coingecko.com/api/v3/simple/price', params=params)
-    # We can return response without any modification
-    # and let the data source script modify it before return result to oracle script
+    
+    # The response may be directly returned without any modification
+    # and allow the data source script to modify it before returning result to oracle script
     return resp.json(), resp.status_code
 
 def main():
-    # Then, run the app
+    # Run the application listening to port 3000
     app.run('0.0.0.0', 3000)
 
 if __name__ == "__main__":
