@@ -1,7 +1,7 @@
 import os
 
 from typing import Any, Mapping
-from flask import Flask, Response, request, jsonify, current_app
+from flask import Flask, Response, request, jsonify
 from .verify import check_required_headers, verify_request
 from .cache import LRUCache
 
@@ -23,7 +23,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
     # a hook function to verify requests before doing other things
     @app.before_request
     def verify():
-        current_app.logger.info(request.headers)
+        app.logger.info(request.headers)
         if check_required_headers(request.headers):
             return jsonify({ "error": "there are missing required headers" }), 400
 
