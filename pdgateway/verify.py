@@ -14,7 +14,7 @@ REQUIRED_HEADERS = [
 ]
 
 def check_required_headers(headers: Headers) -> bool:
-    current_app.lgger.info('test required_headers')
+    current_app.logger.info('test required_headers')
     current_app.logger.info('REQUIRED_HEADERS:' + str(REQUIRED_HEADERS))
     current_app.logger.info([h for h in headers])
     if all(header_name in headers for header_name in REQUIRED_HEADERS):

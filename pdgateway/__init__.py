@@ -25,6 +25,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
     def verify():
         app.logger.info(request.headers)
         if check_required_headers(request.headers):
+            app.logger.info('miss')
             return jsonify({ "error": "there are missing required headers" }), 400
 
         if cache.is_hit(request.headers.get("BAND_SIGNATURE")):
