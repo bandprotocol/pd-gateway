@@ -40,8 +40,7 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
         "signature": signature
     }
     current_app.logger.info(bandchain_url)
-    current_app.logger.info(params)
-    current_app.logger.debug("verify request with {}".format(json.dumps(params)))
+    current_app.logger.info("verify request with {}".format(json.dumps(params)))
     try:
         res = requests.get(url=vfrq_url, params=params)
         if res.status_code == 200:
