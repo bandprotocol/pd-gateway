@@ -24,7 +24,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
     @app.before_request
     def verify():
         app.logger.info(request.headers)
-        if check_required_headers(request.headers):
+        if not check_required_headers(request.headers):
             app.logger.info('miss')
             return jsonify({ "error": "there are missing required headers" }), 400
 
