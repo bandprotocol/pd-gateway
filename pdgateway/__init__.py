@@ -23,7 +23,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
     # a hook function to verify requests before doing other things
     @app.before_request
     def verify():
-        if check_required_headers(request.headers):
+        if not check_required_headers(request.headers):
             return jsonify({ "error": "there are missing required headers" }), 400
 
         if cache.is_hit(request.headers.get("BAND_SIGNATURE")):
