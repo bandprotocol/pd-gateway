@@ -5,12 +5,12 @@ from requests import exceptions
 from werkzeug.datastructures import Headers
 
 REQUIRED_HEADERS = [
-    "BAND_CHAIN_ID",
-    "BAND_VALIDATOR",
-    "BAND_REQUEST_ID",
-    "BAND_EXTERNAL_ID",
-    "BAND_REPORTER",
-    "BAND_SIGNATURE",
+    "Band-Chain-Id",
+    "Band-Validator",
+    "Band-Request-Id",
+    "Band-External-Id",
+    "Band-Reporter",
+    "Band-Signature",
 ]
 
 def check_required_headers(headers: Headers) -> bool:
@@ -28,12 +28,12 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
     bandchain_url = current_app.config["BANDCHAIN_REST_ENDPOINT"]
     vfrq_url = bandchain_url + "/oracle/v1/verify_request"
 
-    chain_id = headers.get("BAND_CHAIN_ID")
-    validator_addr = headers.get("BAND_VALIDATOR")
-    request_id = headers.get("BAND_REQUEST_ID")
-    external_id = headers.get("BAND_EXTERNAL_ID")
-    reporter = headers.get("BAND_REPORTER")
-    signature = headers.get("BAND_SIGNATURE")
+    chain_id = headers.get("Band-Chain-Id")
+    validator_addr = headers.get("Band-Validator")
+    request_id = headers.get("Band-Request-Id")
+    external_id = headers.get("Band-External-Id")
+    reporter = headers.get("Band-Reporter")
+    signature = headers.get("Band-Signature")
     params = {
         "chain_id": chain_id,
         "validator": validator_addr,

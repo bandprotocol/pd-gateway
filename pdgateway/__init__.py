@@ -28,7 +28,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
             app.logger.info('miss')
             return jsonify({ "error": "there are missing required headers" }), 400
 
-        if cache.is_hit(request.headers.get("BAND_SIGNATURE")):
+        if cache.is_hit(request.headers.get("Band-Signature")):
             return jsonify({"error": "duplicated request not allowed"}), 403
 
         is_valid, response = verify_request(request.headers)
@@ -40,7 +40,7 @@ def create_app(config: Mapping[str, Any]) -> Flask:
     @app.after_request
     def update_cache(response: Response) -> Response:
         if response.status_code == 200:
-            cache.put(key=request.headers.get("BAND_SIGNATURE"), val=None)
+            cache.put(key=request.headers.get("Band-Signature"), val=None)
         return response
 
     return app

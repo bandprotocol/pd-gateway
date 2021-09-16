@@ -9,25 +9,25 @@ from pdgateway.verify import check_required_headers, verify_request
 
 class TestCheckRequiredHeaders(unittest.TestCase):
     def test_success(self):
-        # BAND_REQUEST_ID is missing
+        # Band-Request-Id is missing
         is_valid = check_required_headers({
-            "BAND_CHAIN_ID": "bandchain",
-            "BAND_VALIDATOR": "bandcoolvalidator",
-            "BAND_EXTERNAL_ID": "2",
-            "BAND_REPORTER": "bandcoolreporter",
-            "BAND_SIGNATURE": "coolsignature",
-            "BAND_REQUEST_ID": "1",
+            "Band-Chain-Id": "bandchain",
+            "Band-Validator": "bandcoolvalidator",
+            "Band-External-Id": "2",
+            "Band-Reporter": "bandcoolreporter",
+            "Band-Signature": "coolsignature",
+            "Band-Request-Id": "1",
         })
         self.assertTrue(is_valid)
 
     def test_incomplete_params(self):
-        # BAND_REQUEST_ID is missing
+        # Band-Request-Id is missing
         is_valid = check_required_headers({
-            "BAND_CHAIN_ID": "bandchain",
-            "BAND_VALIDATOR": "bandcoolvalidator",
-            "BAND_EXTERNAL_ID": "2",
-            "BAND_REPORTER": "bandcoolreporter",
-            "BAND_SIGNATURE": "coolsignature",
+            "Band-Chain-Id": "bandchain",
+            "Band-Validator": "bandcoolvalidator",
+            "Band-External-Id": "2",
+            "Band-Reporter": "bandcoolreporter",
+            "Band-Signature": "coolsignature",
         })
         self.assertFalse(is_valid)
 
@@ -63,12 +63,12 @@ class TestRequestVerification(unittest.TestCase):
         })
         with self.app.app_context():
             is_valid, result = verify_request({
-                "BAND_CHAIN_ID": "bandchain",
-                "BAND_VALIDATOR": "bandcoolvalidator",
-                "BAND_REQUEST_ID": "4285",
-                "BAND_EXTERNAL_ID": "2",
-                "BAND_REPORTER": "bandcoolreporter",
-                "BAND_SIGNATURE": "coolsignature",
+                "Band-Chain-Id": "bandchain",
+                "Band-Validator": "bandcoolvalidator",
+                "Band-Request-Id": "4285",
+                "Band-External-Id": "2",
+                "Band-Reporter": "bandcoolreporter",
+                "Band-Signature": "coolsignature",
             })
         self.assertTrue(is_valid)
         self.assertEqual(result, self.success_response_body)
@@ -84,12 +84,12 @@ class TestRequestVerification(unittest.TestCase):
         })
         with self.app.app_context():
             is_valid, result = verify_request({
-                "BAND_CHAIN_ID": "bandchain",
-                "BAND_VALIDATOR": "bandcoolvalidator",
-                "BAND_REQUEST_ID": "4285",
-                "BAND_EXTERNAL_ID": "2",
-                "BAND_REPORTER": "bandcoolreporter",
-                "BAND_SIGNATURE": "coolsignature",
+                "Band-Chain-Id": "bandchain",
+                "Band-Validator": "bandcoolvalidator",
+                "Band-Request-Id": "4285",
+                "Band-External-Id": "2",
+                "Band-Reporter": "bandcoolreporter",
+                "Band-Signature": "coolsignature",
             })
         self.assertFalse(is_valid)
         self.assertEqual(result, self.failed_response_body)
@@ -103,12 +103,12 @@ class TestRequestVerification(unittest.TestCase):
         })
         with self.app.app_context():
             is_valid, result = verify_request({
-                "BAND_CHAIN_ID": "bandchain",
-                "BAND_VALIDATOR": "bandcoolvalidator",
-                "BAND_REQUEST_ID": "4285",
-                "BAND_EXTERNAL_ID": "2",
-                "BAND_REPORTER": "bandcoolreporter",
-                "BAND_SIGNATURE": "coolsignature",
+                "Band-Chain-Id": "bandchain",
+                "Band-Validator": "bandcoolvalidator",
+                "Band-Request-Id": "4285",
+                "Band-External-Id": "2",
+                "Band-Reporter": "bandcoolreporter",
+                "Band-Signature": "coolsignature",
             })
         self.assertFalse(is_valid)
         self.assertEqual(result, { "error": "testexception" })

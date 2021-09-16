@@ -25,12 +25,12 @@ def set_header_from_env(headers: typing.Dict[str, str], key: str):
 # Create request verification info as HTTP headers
 def set_request_verification_headers(existingHeaders: typing.Dict[str, str]) -> typing.Dict[str, str]:
   newHeaders = existingHeaders.copy()
-  set_header_from_env(newHeaders, "BAND_CHAIN_ID")
-  set_header_from_env(newHeaders, "BAND_VALIDATOR")
-  set_header_from_env(newHeaders, "BAND_REQUEST_ID")
-  set_header_from_env(newHeaders, "BAND_EXTERNAL_ID")
-  set_header_from_env(newHeaders, "BAND_REPORTER")
-  set_header_from_env(newHeaders, "BAND_SIGNATURE")
+  set_header_from_env(newHeaders, "Band-Chain-Id")
+  set_header_from_env(newHeaders, "Band-Validator")
+  set_header_from_env(newHeaders, "Band-Request-Id")
+  set_header_from_env(newHeaders, "Band-External-Id")
+  set_header_from_env(newHeaders, "Band-Reporter")
+  set_header_from_env(newHeaders, "Band-Signature")
   return newHeaders
 
 # Convert symbols to coin IDs based on `/coins/list` of CoinGecko
