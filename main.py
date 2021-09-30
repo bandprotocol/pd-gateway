@@ -13,6 +13,7 @@ app = create_app(
         "API_KEY": environ.get("API_KEY"),
         "BANDCHAIN_REST_ENDPOINT": environ.get("BANDCHAIN_REST_ENDPOINT"),
         "PREMIUM_ENDPOINT": environ.get("PREMIUM_ENDPOINT"),
+        "DATA_SOURCE_ID": int(os.environ.get("DATA_SOURCE_ID")),
     }
 )
 
