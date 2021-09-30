@@ -47,7 +47,7 @@ def main(endpoint, raw_symbols):
 
     # Construct the result to be handled by Oracle Script
     # For this case, the result should be comma-separated
-    return ",".join(priceList)
+    return ",".join(prices)
 
 
 if __name__ == "__main__":
