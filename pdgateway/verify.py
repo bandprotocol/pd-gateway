@@ -1,4 +1,5 @@
 import requests
+import os
 from flask import json, current_app
 from typing import Dict, Tuple
 from requests import exceptions
@@ -13,11 +14,13 @@ REQUIRED_HEADERS = [
     "BAND_SIGNATURE",
 ]
 
+
 def check_required_headers(headers: Headers) -> bool:
     if all(header_name in headers for header_name in REQUIRED_HEADERS):
         return True
     else:
         return False
+
 
 # verify_request verifies incoming requests by sending the info
 # to your BandChain node before accessing your exclusive API.
@@ -37,16 +40,18 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
         "request_id": request_id,
         "external_id": external_id,
         "reporter": reporter,
-        "signature": signature
+        "signature": signature,
     }
     current_app.logger.debug("verify request with {}".format(json.dumps(params)))
     try:
         res = requests.get(url=vfrq_url, params=params)
+        if res["data_source_id"] != icurrent_app.config["DATA_SOURCE_ID"]:
+            return False, {"request verification is NOT valid: do not match with data source id"}
         if res.status_code == 200:
             return True, res.json()
         else:
             current_app.logger.warning("request verification is NOT valid: {}".format(res.text))
             return False, res.json()
     except exceptions.RequestException as e:
-        current_app.logger.error("execption occurred when verify request: {}".format(str(e)))
-        return False, { "error": str(e) }
+        current_app.logger.error("exception occurred when verify request: {}".format(str(e)))
+        return False, {"error": str(e)}
