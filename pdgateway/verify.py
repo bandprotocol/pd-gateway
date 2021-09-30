@@ -55,5 +55,5 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
             current_app.logger.warning("request verification is NOT valid: {}".format(res.text))
             return False, res.json()
     except exceptions.RequestException as e:
-        current_app.logger.error("execption occurred when verify request: {}".format(str(e)))
+        current_app.logger.error("exception occurred when verify request: {}".format(str(e)))
         return False, {"error": str(e)}
