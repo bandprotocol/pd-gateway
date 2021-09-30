@@ -14,7 +14,7 @@ REQUIRED_HEADERS = [
     "BAND_SIGNATURE",
 ]
 
-DATA_SOURCE_IDS = os.environ.get("DATA_SOURCE_ID").split(",")
+DATA_SOURCE_ID = os.environ.get("DATA_SOURCE_ID")
 
 
 def check_required_headers(headers: Headers) -> bool:
@@ -47,7 +47,7 @@ def verify_request(headers: Headers) -> Tuple[bool, Dict]:
     current_app.logger.debug("verify request with {}".format(json.dumps(params)))
     try:
         res = requests.get(url=vfrq_url, params=params)
-        if res["data_source_id"] not in DATA_SOURCE_IDS:
+        if res["data_source_id"] != int(DATA_SOURCE_ID):
             return False, {"request verification is NOT valid: do not match with data source id"}
         if res.status_code == 200:
             return True, res.json()
